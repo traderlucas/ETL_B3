@@ -1,0 +1,4 @@
+pandas
+sqlachemy
+pymysql
+apache-airflow

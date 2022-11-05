@@ -1,9 +1,11 @@
 import pandas as pd
+import pymysql
+from sqlalchemy import create_engine
 from airflow import DAG
 from airflow.operators.python import PythonOperator
 from datetime import timedelta, datetime
 from airflow.utils.dates import days_ago
-from variables import URLS
+from dags.variables import URLS
 
 default_args = {
     "owner": "Indicium",
