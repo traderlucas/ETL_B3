@@ -16,25 +16,29 @@ date = now.strftime("%d/%m/%Y")
 
 def df_1():
 
-    dfs = pd.read_html("https://www.b3.com.br/pt_br/market-data-e-indices/servicos-de-dados/market-data/consultas/mercado-a-vista/termo/liquidacoes-antecipadas/liquidacoes-antecipadas.htm")
+    dfs = pd.read_html(
+        "https://www.b3.com.br/pt_br/market-data-e-indices/servicos-de-dados/market-data/consultas/mercado-a-vista/termo/liquidacoes-antecipadas/liquidacoes-antecipadas.htm"
+    )
     df = dfs[0]
     df = df.to_csv(sep=',', index=True)
     
 
     s3_hook = S3Hook(aws_conn_id=s3_conn_id)
 
-    s3_hook.load_string(df, "liquidacoes_{0}.csv".format(date), bucket_name=bucket, replace=True)
+    s3_hook.load_string(df, "liquidacoes_antecipadas_{0}.csv".format(date), bucket_name=bucket, replace=True)
 
 
 def df_2():
 
-    dfs = pd.read_html(f"https://www.b3.com.br/pt_br/market-data-e-indices/servicos-de-dados/market-data/consultas/mercado-a-vista/termo/posicoes-em-aberto/posicoes-em-aberto-8AA8D0CC77D179750177DF167F150965.htm?data={date}&f=0")
+    dfs = pd.read_html(
+        f"https://www.b3.com.br/pt_br/market-data-e-indices/servicos-de-dados/market-data/consultas/mercado-a-vista/termo/posicoes-em-aberto/posicoes-em-aberto-8AA8D0CC77D179750177DF167F150965.htm?data={date}&f=0"
+    )
     df = dfs[1]
     df = df.to_csv(sep=',', index=True)
     
     s3_hook = S3Hook(aws_conn_id=s3_conn_id)
 
-    s3_hook.load_string(df, "liquidacoes_{0}.csv".format(date), bucket_name=bucket, replace=True)
+    s3_hook.load_string(df, "posicoes_em_aberto_{0}.csv".format(date), bucket_name=bucket, replace=True)
 
 
 default_args = {
