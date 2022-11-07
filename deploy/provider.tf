@@ -1,13 +1,13 @@
-provider aws {
-    region = var.REGION
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+    }
+  }
 }
 
-terraform {
-    backend "s3" {
-        profile        = "personal"
-        bucket         = "etl-b3-terraform"
-        key            = "ETL_B3/prod/terraform.tfstate"
-        encrypt        = true
-        region         = "us-east-1"
-    }
+provider aws {
+    region                   = "us-east-1"
+    profile                  = "personal"
+    shared_credentials_files = "~/.aws/credentials"
 }
